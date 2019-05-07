@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="../static/css/layui.css">
+</head>
+<body>
+    <table class="layui-hide" style="padding-left: 100px" id="USER_TABLE" lay-filter="USER_TABLE"></table>
+    <script src="../static/layui.js" charset="utf-8"></script>
+         <script type="text/html" id="TOOLBAR_TWO">
+            <select >
+                <option value="0">用户</option>
+                <option value="1">管理员</option>
+                <option value="2">超级管理员</option>
+            </select>
+    </script>
+    <script type="text/html" id="TOOLBAR_ONE">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" id="USER_ADD">添加</button>
+            <button class="layui-btn layui-btn-sm" id="USER_DEL">删除</button>
+            <button class="layui-btn layui-btn-sm" id="USER_CHANGE">更改权限</button>
+        </div>
+    </script>
+    <script type="text/html" id="TOOLBAR_T">
+        {{#  if(d.age ==1){ }}
+        <div><i>否</i></div>
+        {{#  } }}
+    </script>
+    <script>
+        layui.use(['table','form'],function () {
+            var table=layui.table,
+                    $=layui.$,
+                 form=layui.form;
+
+            var cols=[[
+                {type:'checkbox' ,fixed:'left'}
+                ,{field:'name',title:'姓名',width:100}
+                ,{field:'password',title:'密码'}
+                ,{field:'age',title:'年龄',toolbar:'#TOOLBAR_T',width:100,sort:true}
+            ]]
+            //表格渲染
+            table.render({
+                elem:'#USER_TABLE'
+                ,width:500
+                ,url:'http://localhost:8080/user/get'
+                ,toolbar:'#TOOLBAR_ONE'
+                ,cols:cols
+                ,done:function (data) {
+                    console.log(data);
+                }
+            })
+            //添加
+            $('#USER_ADD').on('click',function () {
+                add();
+            })
+            //删除
+            $('#USER_DEL').on('click',function () {
+                del();
+            })
+            //更改权限
+            $('#USER_CHANGE').on('click',function () {
+                change();
+            })
+//函数实现
+            function add() {
+                layer.open({
+                    type:1
+                    ,title:'用户添加'
+                    ,area:['400px','350px']
+                    ,content:'<form class="layui-form" style="padding-top: 40px">\n' +
+                        '            <div class="layui-form-item">\n' +
+                        '                <label class="layui-form-label">姓名</label>\n' +
+                        '                <div class="layui-input-inline">\n' +
+                        '                    <input type="text" name="name" autocomplete="off" class="layui-input">\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '            <div class="layui-form-item">\n' +
+                        '                <label class="layui-form-label">密码</label>\n' +
+                        '                <div class="layui-input-inline">\n' +
+                        '                    <input type="text" name="password" autocomplete="off" class="layui-input">\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '            <div class="layui-form-item">\n' +
+                        '                <label class="layui-form-label">年龄</label>\n' +
+                        '                <div class="layui-input-inline">\n' +
+                        '                    <input type="text" name="age" autocomplete="off" class="layui-input">\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '            <div class="layui-form-item">\n' +
+                        '                <div class="layui-input-block">\n' +
+                        '                    <button class="layui-btn" lay-submit="" lay-filter="ADD">立即提交</button>\n' +
+                        '                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '        </form>'
+                    ,success:function (layero,index) {
+                        form.on('submit(ADD)',function (data) {
+                            $.ajax({
+                                url:'http://localhost:8080/user/s'
+                                ,type:'post'
+                                ,data:JSON.stringify(data.field)
+                                ,contentType:'application/json;charset=UTF-8'
+                                ,success:function (res) {
+                                    if(res.code==0){
+                                        layer.msg("添加成功");
+                                        layer.close(index);
+                                        table.reload('USER_TABLE');
+                                    }
+                                }
+                            });
+                            return false;
+                        })
+                    }
+                })
+            }
+            function del() {
+                var id=[];
+                var checkStatus=table.checkStatus('USER_TABLE');
+                //遍历获取选中数据的id
+                checkStatus.data.forEach(function (value,i) {
+                    id.push(value.id);
+                })
+                if(id.length==0){
+                    layer.msg("请先选择删除的数据");
+                    return false;
+                }
+                $.ajax({
+                    url:'http://localhost:8080/user/del'
+                    ,type:'post'
+                    ,data:{'id[]':id}
+                    ,success:function (res) {
+                        if(res.code==0){
+                            layer.msg("删除成功");
+                            table.reload('USER_TABLE');
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>
