@@ -31,4 +31,12 @@ public class User {
     private String password;
     //年龄
     private Integer age;
+    //账号
+    private String account;
+    //出生日期
+    private String birth;
+    //权限
+    private String root;
+    //学校
+    private String school;
 }

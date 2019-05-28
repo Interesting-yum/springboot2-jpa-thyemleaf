@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>知学友后台管理页面</title>
+    <link rel="stylesheet" href="../static/css/layui.css">
+    <script src="../static/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout-admin">
+    <!--头部-->
+    <div class="layui-header">
+        <div class="layui-logo">知学友后台管理</div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item">
+                <a href="javascript:;">其他系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">邮件管理</a></dd>
+                    <dd><a href="javascript:;">消息管理</a></dd>
+                    <dd><a href="javascript:;">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href=""><img src="../static/images/zxy.png" class="layui-nav-img">newbee_D</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <!--左侧-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="ZXYToolBar">
+                <li class="layui-nav-item">
+                    <a href="">主控台</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">用户管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">动态管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--中间主体-->
+    <div class="layui-body" id="container">
+        <div class="layui-tab" lay-filter="tabs" lay-allowClose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this">用户列表</li>
+            </ul>
+            <div class="layui-tab-content">
+                <table class="layui-hide" style="padding-left: 100px" id="USER_TABLE" lay-filter="USER_TABLE"></table>
+            </div>
+        </div>
+    </div>
+
+    <!--底部-->
+    <div class="layui-footer">
+        <center>newbeeD&copy;Tel:18283828635</center>
+    </div>
+</div>
+<script src="../static/layui.js" charset="utf-8"></script>
+<script type="text/html" id="TOOLBAR_TWO">
+    <select >
+        <option value="0">用户</option>
+        <option value="1">管理员</option>
+        <option value="2">超级管理员</option>
+    </select>
+</script>
+<script type="text/html" id="TOOLBAR_XUHAO">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="TOOLBAR_ONE">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" id="USER_ADD">添加</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" id="USER_DEL">删除</button>
+        <button class="layui-btn layui-btn-sm" id="USER_CHANGE">更改权限</button>
+    </div>
+</script>
+<script>
+    layui.use(['table','form','element','laydate'],function () {
+        var table=layui.table,
+            $=layui.$,
+            form=layui.form,
+            laydate=layui.laydate,
+            element=layui.element;
+
+        var cols=[[{type:'checkbox' ,fixed:'left'}
+            ,{title:'序号',toolbar:'#TOOLBAR_XUHAO',width:80}
+            ,{field:'name',title:'姓名',width:100}
+            ,{field:'account',title:'账号',sort:true,width:150}
+            ,{field:'age',title:'年龄',width:100,sort:true}
+            ,{field:'birth',title:'出生日期',width:150}
+            ,{field:'root',title:'权限',width:100}
+            ,{field:'password',title:'密码'}
+            ,{field:'school',title:'学校'}
+
+
+        ]]
+        //表格渲染
+        table.render({
+            elem:'#USER_TABLE'
+            ,url:'http://localhost:8080/user/get'
+            ,toolbar:'#TOOLBAR_ONE'
+            ,cols:cols
+            ,page:true
+            ,done:function (data) {
+                console.log(data);
+            }
+        })
+        //添加
+        $('#USER_ADD').on('click',function () {
+            add();
+        })
+        //删除
+        $('#USER_DEL').on('click',function () {
+            del();
+        })
+        //更改权限
+        $('#USER_CHANGE').on('click',function () {
+            change();
+        })
+//函数实现
+        function add() {
+            layer.open({
+                type:1
+                ,title:'用户添加'
+                ,area:['400px','500px']
+                ,content:'<form class="layui-form" style="padding-top: 40px">\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">姓名</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input type="text" name="name" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">密码</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input type="text" name="password" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">年龄</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input type="text" name="age" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">账号</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input type="text" name="account" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">学校</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input type="text" name="school" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">出生日期</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input id="USER_DATE" placeholder="YY-MM-DD" lay-verify="date" type="text" name="birth" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <div class="layui-input-block">\n' +
+                    '                    <button class="layui-btn" lay-submit="" lay-filter="ADD">立即提交</button>\n' +
+                    '                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </form>'
+                ,success:function (layero,index) {
+                    laydate.render({
+                        elem:'#USER_DATE'
+                    });
+                    form.on('submit(ADD)',function (data) {
+                        $.ajax({
+                            url:'http://localhost:8080/user/save'
+                            ,type:'post'
+                            ,data:data.field
+                            ,success:function (res) {
+                                if(res.code==0){
+                                    layer.msg("添加成功");
+                                    layer.close(index);
+                                    table.reload('USER_TABLE');
+                                }
+                            }
+                        });
+                        return false;
+                    })
+                }
+            })
+        }
+        function del() {
+            var id=[];
+            var checkStatus=table.checkStatus('USER_TABLE');
+            //遍历获取选中数据的id
+            checkStatus.data.forEach(function (value,i) {
+                id.push(value.id);
+            })
+            if(id.length==0){
+                layer.msg("请先选择删除的数据");
+                return false;
+            }
+            $.ajax({
+                url:'http://localhost:8080/user/del'
+                ,type:'post'
+                ,data:{'id[]':id}
+                ,success:function (res) {
+                    if(res.code==0){
+                        layer.msg("删除成功");
+                        table.reload('USER_TABLE');
+                    }
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

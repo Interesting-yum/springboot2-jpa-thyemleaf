@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseMsg save(String name, String password, Integer age) {
-        User user=User.builder().name(name).password(password).age(age).build();
+    public ResponseMsg save(String name, String password, Integer age,String account,String school,String birth,String root) {
+        User user=User.builder().name(name).password(password).age(age).account(account).school(school).birth(birth).root(root).build();
         userRepository.save(user);
         ResponseMsg responseMsg=new ResponseMsg(0,"成功");
         return responseMsg;

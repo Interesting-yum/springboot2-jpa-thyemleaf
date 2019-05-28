@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserService {
     User getById(Long id);
 
-    ResponseMsg save(String name, String password, Integer age);
+    ResponseMsg save(String name, String password, Integer age,String account,String school,String birth,String root);
 
     ResponseMsgTable get();
 

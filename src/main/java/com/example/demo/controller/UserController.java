@@ -38,9 +38,13 @@ public class UserController {
     public ResponseMsg save(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "age") Integer age
+            @RequestParam(value = "age") Integer age,
+            @RequestParam(value = "account") String account,
+            @RequestParam(value = "school") String school,
+            @RequestParam(value = "birth") String birth,
+            @RequestParam(value = "root",required = false,defaultValue = "普通用户") String root
     ){
-        return userService.save(name,password,age);
+        return userService.save(name,password,age,account,school,birth,root);
     }
 
     @RequestMapping(value = "/s",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
