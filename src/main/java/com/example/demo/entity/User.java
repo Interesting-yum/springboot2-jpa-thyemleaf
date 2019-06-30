@@ -39,4 +39,6 @@ public class User {
     private String root;
     //学校
     private String school;
+    //邮箱
+    private String email;
 }

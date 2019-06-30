@@ -201,6 +201,51 @@
                 }
             })
         }
+
+        function change() {
+            layer.open({
+                type:1
+                ,title:''
+                ,area:['400px','500px']
+                ,content:'<form class="layui-form" style="padding-top: 40px">\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">账号</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input type="text" name="userId" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <label class="layui-form-label">邮箱</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <input type="text" name="email" autocomplete="off" class="layui-input">\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="layui-form-item">\n' +
+                    '                <div class="layui-input-block">\n' +
+                    '                    <button class="layui-btn" lay-submit="" lay-filter="ADD">立即提交</button>\n' +
+                    '                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </form>'
+                ,success:function (layero,index) {
+                    form.on('submit(ADD)',function (data) {
+                        $.ajax({
+                            url:'http://localhost:8080/resetPas/sendEmail'
+                            ,type:'post'
+                            ,data:data.field
+                            ,success:function (res) {
+                                if(res.code==0){
+                                    layer.msg("添加成功");
+                                    layer.close(index);
+                                }
+                            }
+                        });
+                        return false;
+                    })
+                }
+            })
+        }
+
         function del() {
             var id=[];
             var checkStatus=table.checkStatus('USER_TABLE');
