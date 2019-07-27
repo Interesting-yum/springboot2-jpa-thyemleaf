@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.thymeleaf.util.MapUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -72,11 +73,14 @@ public class UserServiceImpl implements UserService {
         Set<String> accounts =userList.stream().map(data->data.getAccount()).collect(Collectors.toSet());
         //根据账号批量查询地址信息,建立账号与相应地址的映射
         Map<String,UserAddress> addressMap = addressService.getAddressMap(accounts);
+
         dtoList = userList.stream().map(d->{
             UserListDTO dto = new UserListDTO();
             BeanCopierUtils.copy(d,dto);
             AddressDTO addressDTO = new AddressDTO();
-            BeanCopierUtils.copy(addressMap.get(d.getAccount()),addressDTO);
+            if(!MapUtils.isEmpty(addressMap)){
+                BeanCopierUtils.copy(addressMap.get(d.getAccount()),addressDTO);
+            }
             dto.setAddressDTO(addressDTO);
             return dto;
         }).collect(Collectors.toList());
