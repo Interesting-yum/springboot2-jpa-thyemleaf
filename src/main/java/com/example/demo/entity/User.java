@@ -35,8 +35,8 @@ public class User {
     private String account;
     //出生日期
     private String birth;
-    //权限
-    private String root;
+    //权限 0-用户/1-管理员/2-超级管理员
+    private Integer role;
     //学校
     private String school;
     //邮箱

@@ -1,12 +1,21 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserListSearchDTO;
 import com.example.demo.entity.User;
+import com.example.demo.param.UserListSearchParam;
 import com.example.demo.services.UserService;
+import com.example.demo.utility.BeanCopierUtils;
 import com.example.demo.utility.ResponseMsg;
 import com.example.demo.utility.ResponseMsgTable;
+import com.example.demo.vo.UserVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -15,17 +24,18 @@ import java.util.List;
  * @description 用户控制器
  */
 @RestController
+@Api(tags = "用户控制器")
 @RequestMapping(value = "/user")
 public class UserController {
     @Autowired
     public UserService userService;
 
-    /**
-     * 获取
-     */
-    @GetMapping(value = "/get")
-    public ResponseMsgTable get(
-    ){
+    @ApiOperation(value = "用户列表",responseContainer = "list",response = UserVO.class)
+    @PostMapping(value = "/listUser")
+    public ResponseMsgTable get(@RequestBody @Valid UserListSearchParam param){
+        UserListSearchDTO searchDTO = new UserListSearchDTO();
+        BeanCopierUtils.copy(param,searchDTO);
+
         return userService.get();
     }
     /**
@@ -47,31 +57,9 @@ public class UserController {
         return userService.save(name,password,age,account,school,birth,root);
     }
 
-    @RequestMapping(value = "/s",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ResponseMsg s(
-            @RequestBody User user
-    ){
-        return userService.s(user);
-    }
-
-    /**
-     * 删除
-     * @param id id标识数组
-     */
+    @ApiOperation(value = "根据id批量删除")
     @PostMapping(value = "/del")
-    public ResponseMsg del(
-            @RequestParam(value = "id[]") List<Long> id
-    ){
+    public ResponseMsg del(@RequestParam(value = "id[]") List<Long> id){
         return userService.del(id);
-    }
-    /**
-     * 根据id获取
-     * @param id 主键
-     */
-    @GetMapping(value = "/get_by_id")
-    public User getById(
-            @RequestParam(value = "id",defaultValue = "12",required = false) Long id
-    ){
-        return userService.getById(id);
     }
 }
