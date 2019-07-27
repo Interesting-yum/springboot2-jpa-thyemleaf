@@ -73,7 +73,6 @@ public class UserServiceImpl implements UserService {
         Set<String> accounts =userList.stream().map(data->data.getAccount()).collect(Collectors.toSet());
         //根据账号批量查询地址信息,建立账号与相应地址的映射
         Map<String,UserAddress> addressMap = addressService.getAddressMap(accounts);
-
         dtoList = userList.stream().map(d->{
             UserListDTO dto = new UserListDTO();
             BeanCopierUtils.copy(d,dto);
