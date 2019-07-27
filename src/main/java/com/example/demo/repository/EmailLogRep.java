@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.VerifyLog;
+import com.example.demo.entity.EmailLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @time 2019/6/28 1:04
  * @description 验证记录，POJO
  */
-public interface VerifyLogRep extends JpaRepository<VerifyLog,Long> {
-    VerifyLog findByIdIn(Long userId);
+public interface EmailLogRep extends JpaRepository<EmailLog,Long> {
 }

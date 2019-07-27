@@ -6,14 +6,18 @@ import java.util.Date;
 
 /**
  * @author djs
- * @date 2019/7/27 15:30
+ * @date 2019/7/27 17:11
  * @description TODO
  */
 @Data
-public class UserDTO {
+public class CreateUserDTO {
+    private CreateAddressDTO createAddressDTO;
+
     private String name;
 
     private Integer age;
+
+    private String password;
 
     private String account;
 

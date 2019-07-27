@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author djs
@@ -19,7 +20,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(name = "new_user")
+@Table(name = "user")
 public class User {
     //自增主键
     @Id
@@ -34,7 +35,7 @@ public class User {
     //账号
     private String account;
     //出生日期
-    private String birth;
+    private Date birth;
     //权限 0-用户/1-管理员/2-超级管理员
     private Integer role;
     //学校

@@ -13,26 +13,24 @@ import javax.persistence.Table;
 
 /**
  * @author djs
- * @version 1.0
- * @time 2019/6/28 0:35
- * @description 用户验证记录
+ * @date 2019/7/27 16:50
+ * @description TODO
  */
-@Data
 @Builder
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(name = "user_verifyLog")
-public class VerifyLog {
-    //自增主键
+@Table(name = "user_address")
+public class UserAddress {
     @Id
     @GeneratedValue
     private Long id;
-    //用户id
-    private Long userId;
-    //用户邮箱
-    private String email;
-    //验证秘钥，确保安全，由UUID生成
-    private String resetKey;
+    private String account;
+    private String province;
+    private String city;
+    private String county;
+    private String addressName; //省市区中文
+    private String address; //详细住址
 }

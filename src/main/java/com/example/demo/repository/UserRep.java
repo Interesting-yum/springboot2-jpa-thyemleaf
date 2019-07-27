@@ -14,7 +14,7 @@ import java.util.List;
  * @description 用户jpa接口
  */
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRep extends JpaRepository<User,Long> {
 
     User findOneById(Long id);
     List<User> findAll();
