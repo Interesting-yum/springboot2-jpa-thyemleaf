@@ -1,11 +1,9 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateUserDTO;
-import com.example.demo.entity.User;
-import com.example.demo.utility.ResponseMsg;
-import com.example.demo.utility.ResponseMsgTable;
+import com.example.demo.dto.UserListDTO;
+import com.example.demo.dto.UserListSearchDTO;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,4 +15,5 @@ public interface UserService {
 
     void save(CreateUserDTO createUserDTO);
 
+    List<UserListDTO> listUser(UserListSearchDTO searchDTO);
 }

@@ -10,7 +10,9 @@ import java.util.Date;
  * @description TODO
  */
 @Data
-public class UserDTO {
+public class UserListDTO {
+    private AddressDTO addressDTO;
+
     private String name;
 
     private Integer age;

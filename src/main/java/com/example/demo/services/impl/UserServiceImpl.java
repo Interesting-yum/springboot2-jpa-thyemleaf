@@ -1,6 +1,8 @@
 package com.example.demo.services.impl;
 
 import com.example.demo.dto.CreateUserDTO;
+import com.example.demo.dto.UserListDTO;
+import com.example.demo.dto.UserListSearchDTO;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserAddress;
 import com.example.demo.repository.UserRep;
@@ -8,6 +10,7 @@ import com.example.demo.services.AddressService;
 import com.example.demo.services.UserService;
 import com.example.demo.utility.ResponseMsg;
 import com.example.demo.utility.ResponseMsgTable;
+import com.example.demo.vo.UserListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +52,11 @@ public class UserServiceImpl implements UserService {
                 getCreateAddressDTO().getCity()+createUserDTO.getCreateAddressDTO().getCounty());
         address.setAddress(createUserDTO.getCreateAddressDTO().getAddress());
         addressService.createAddress(address);
+    }
+
+    @Override
+    public List<UserListDTO> listUser(UserListSearchDTO searchDTO) {
+        return null;
     }
 
 }

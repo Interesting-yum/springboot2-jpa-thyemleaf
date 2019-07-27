@@ -20,4 +20,16 @@ public enum  RoleEnum {
 
     private Integer code;
     private String desc;
+    public static String getDescByCode(Integer code){
+        switch (code){
+            case 0:
+                return ORDINARY_USER.getDesc();
+            case 1:
+                return ADMIN.getDesc();
+            case 2:
+                return SUPER_ADMIN.getDesc();
+            default:
+                return "";
+        }
+    }
 }
