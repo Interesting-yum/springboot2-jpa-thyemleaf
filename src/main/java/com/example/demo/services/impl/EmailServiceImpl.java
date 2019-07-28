@@ -11,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class EmailServiceImpl implements EmailService {
     private EmailLogRep emailLogRep;
     @Autowired
     private UserService userService;
-    @Autowired
+    @Resource
     private JavaMailSender javaMailSender;
 
     @Override
