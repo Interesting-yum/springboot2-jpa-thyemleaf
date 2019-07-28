@@ -1,11 +1,9 @@
 package com.example.demo.utility;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Objects;
 
 
 /**

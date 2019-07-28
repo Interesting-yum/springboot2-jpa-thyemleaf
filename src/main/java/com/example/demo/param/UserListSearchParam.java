@@ -17,12 +17,10 @@ import javax.validation.constraints.NotNull;
 public class UserListSearchParam {
 
     @ApiModelProperty(value = "用户账号")
-    @NotNull(message = "用户账号不能为空")
     @Length(min = 1, max = 11, message = "长度不对")
     private String account;
 
     @ApiModelProperty(value = "用户角色",required = true)
-    @NotNull(message = "角色不能为空")
     private Integer role;
 
     @ApiModelProperty(value = "用户名")

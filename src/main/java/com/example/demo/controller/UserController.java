@@ -35,7 +35,7 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @ApiOperation(value = "用户列表",responseContainer = "list",response = UserListVO.class)
-    @PostMapping(value = "/listUser")
+    @PostMapping(value = "/list-user")
     public ResponseMsg listUser(@RequestBody @Valid UserListSearchParam param){
         //TODO 待分页
         UserListSearchDTO searchDTO = new UserListSearchDTO();

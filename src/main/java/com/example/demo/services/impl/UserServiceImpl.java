@@ -86,6 +86,11 @@ public class UserServiceImpl implements UserService {
         return dtoList;
     }
 
+    @Override
+    public User getById(Long userId) {
+        return userRep.findOneById(userId);
+    }
+
     private Specification<User> getQuery(UserListSearchDTO searchDTO){
         return new Specification<User>() {
             @Override

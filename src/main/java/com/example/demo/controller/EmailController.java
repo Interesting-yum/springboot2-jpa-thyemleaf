@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.base.BaseController;
-import com.example.demo.entity.User;
-import com.example.demo.services.UserService;
 import com.example.demo.services.EmailService;
 import com.example.demo.utility.ResponseMsg;
 import io.swagger.annotations.Api;
@@ -11,14 +9,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
 
 /**
  * @author djs
@@ -32,10 +27,10 @@ import java.util.UUID;
 @Slf4j
 public class EmailController extends BaseController {
     @Autowired
-    public EmailService emailService;
+    private EmailService emailService;
 
     @Value("${spring.mail.username}")
-    public String fromEmail;
+    private String fromEmail;
 
     @PostMapping(value = "/sendEmail")
     @ApiOperation(value = "发送邮件")

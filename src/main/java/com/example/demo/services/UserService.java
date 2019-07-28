@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.dto.CreateUserDTO;
 import com.example.demo.dto.UserListDTO;
 import com.example.demo.dto.UserListSearchDTO;
+import com.example.demo.entity.User;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface UserService {
     void save(CreateUserDTO createUserDTO);
 
     List<UserListDTO> listUser(UserListSearchDTO searchDTO);
+
+    User getById(Long userId);
 }
